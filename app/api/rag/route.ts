@@ -3,13 +3,13 @@ import OpenAI from 'openai';
 import dbConnect from '@/lib/mongoose';
 import Product from '@/models/Product';
 
-// Initialize OpenAI
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
-
 export async function POST(req: Request) {
   try {
+    // Initialize OpenAI inside the handler to avoid build-time errors if env var is missing
+    const openai = new OpenAI({
+      apiKey: process.env.OPENAI_API_KEY,
+    });
+
     const { query } = await req.json();
 
     if (!query) {
