@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { MessageCircle, X, Send, Loader2, Bot } from 'lucide-react';
+import { MessageCircle, X, Send, Loader2, Bot, Maximize2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface Message {
@@ -12,6 +12,7 @@ interface Message {
 
 export function ChatBot() {
   const [isOpen, setIsOpen] = useState(false);
+  const [sizeMode, setSizeMode] = useState<0 | 1 | 2>(0); // 0: Small, 1: Medium, 2: Large
   const [messages, setMessages] = useState<Message[]>([
     { role: 'assistant', content: 'สวัสดีครับ มีอะไรให้ผมช่วยค้นหาในระบบสหกรณ์ไหมครับ?' }
   ]);
@@ -21,6 +22,21 @@ export function ChatBot() {
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const toggleSize = () => {
+    setSizeMode((prev) => (prev + 1) % 3 as 0 | 1 | 2);
+  };
+
+  const getSizeClasses = () => {
+    switch (sizeMode) {
+      case 1:
+        return 'w-[600px] h-[700px]';
+      case 2:
+        return 'w-[90vw] h-[85vh]';
+      default:
+        return 'w-96 h-[500px]';
+    }
   };
 
   useEffect(() => {
@@ -70,7 +86,10 @@ export function ChatBot() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
             transition={{ duration: 0.2 }}
-            className="fixed bottom-20 right-6 z-50 w-96 h-[500px] bg-white rounded-xl shadow-2xl border border-slate-200 flex flex-col overflow-hidden font-sans"
+            className={cn(
+              "fixed bottom-20 right-6 z-50 bg-white rounded-xl shadow-2xl border border-slate-200 flex flex-col overflow-hidden font-sans transition-all duration-300 ease-in-out",
+              getSizeClasses()
+            )}
           >
             {/* Header */}
             <div className="bg-[#354a5f] p-4 flex items-center justify-between text-white">
@@ -83,12 +102,21 @@ export function ChatBot() {
                   <p className="text-xs text-blue-200">Powered by Gemini AI</p>
                 </div>
               </div>
-              <button
-                onClick={() => setIsOpen(false)}
-                className="p-1 hover:bg-white/10 rounded-lg transition-colors"
-              >
-                <X size={20} />
-              </button>
+              <div className="flex items-center gap-1">
+                <button
+                  onClick={toggleSize}
+                  className="p-1 hover:bg-white/10 rounded-lg transition-colors"
+                  title="ปรับขนาดหน้าต่าง"
+                >
+                  <Maximize2 size={18} />
+                </button>
+                <button
+                  onClick={() => setIsOpen(false)}
+                  className="p-1 hover:bg-white/10 rounded-lg transition-colors"
+                >
+                  <X size={20} />
+                </button>
+              </div>
             </div>
 
             {/* Messages */}
