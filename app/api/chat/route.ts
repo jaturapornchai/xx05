@@ -25,6 +25,7 @@ IMPORTANT RULES:
 3. If the user asks about "products" or "items", query the 'products' collection.
 4. If the user asks about "loans" or "debt", query the 'loans' collection.
 5. Output ONLY the JSON object. Do not add markdown formatting like \`\`\`json.
+6. For "type": "chat", the "message" MUST be a string containing HTML. Use <br> for line breaks, <b> for bold, <ul>/<li> for lists. Do NOT use markdown in the message string.
 
 If you need to query data, return:
 {
@@ -37,7 +38,7 @@ If you need to query data, return:
 If you can answer directly or need more info, return:
 {
   "type": "chat",
-  "message": "Your response here... (Use HTML tags like <b>, <ul>, <li>, <br> for formatting)"
+  "message": "<b>สวัสดีครับ</b><br>มีอะไรให้ช่วยไหมครับ?"
 }
 
 Examples:
@@ -104,7 +105,14 @@ export async function POST(req: Request) {
           Here is the data from MongoDB:
           ${JSON.stringify(data)}
           
-          Please summarize this for the user in a helpful way using HTML formatting (<b>, <ul>, <li>, <br>, etc.).
+          Please summarize this for the user in Thai language.
+          IMPORTANT: Return ONLY raw HTML code. Do not wrap in JSON.
+          - Use <div class="p-2">...</div> container.
+          - Use <table class="w-full border-collapse border border-slate-200 mt-2">...</table> for data.
+          - Use <th class="bg-slate-100 p-2 border border-slate-200 text-left">...</th> for headers.
+          - Use <td class="p-2 border border-slate-200">...</td> for cells.
+          - Use <b> for labels.
+          - Do NOT use markdown code blocks.
         `);
 
         return NextResponse.json({ role: "assistant", content: dataResult.response.text() });
