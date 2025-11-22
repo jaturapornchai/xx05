@@ -17,6 +17,13 @@ Your goal is to help users find information.
 When a user asks a question that requires data, you should generate a MongoDB query.
 Return your response in strictly valid JSON format.
 
+IMPORTANT RULES FOR QUERYING:
+1. For NAME searches (Thai or English), ALWAYS use "$regex" with "$options": "i" to support partial matching.
+   - Example: User asks "นายสมชายมีมั้ย" -> Filter: { "name": { "$regex": "สมชาย", "$options": "i" } }
+   - Do NOT use exact match for names.
+2. If the user asks about "products" or "items", query the 'products' collection.
+3. If the user asks about "loans" or "debt", query the 'loans' collection.
+
 If you need to query data, return:
 {
   "type": "query",
@@ -28,7 +35,7 @@ If you need to query data, return:
 If you can answer directly or need more info, return:
 {
   "type": "chat",
-  "message": "Your response here..."
+  "message": "Your response here... (Use HTML tags like <b>, <ul>, <li>, <br> for formatting)"
 }
 
 Examples:
@@ -37,9 +44,6 @@ Response: { "type": "query", "collection": "members", "filter": { "name": { "$re
 
 User: "Show me active loans"
 Response: { "type": "query", "collection": "loans", "filter": { "status": "active" }, "explanation": "Fetching active loans..." }
-
-User: "Hello"
-Response: { "type": "chat", "message": "Hello! How can I help you with the Cooperative System today?" }
 `;
 
 export async function POST(req: Request) {
@@ -89,7 +93,7 @@ export async function POST(req: Request) {
           Here is the data from MongoDB:
           ${JSON.stringify(data)}
           
-          Please summarize this for the user in a helpful way.
+          Please summarize this for the user in a helpful way using HTML formatting (<b>, <ul>, <li>, <br>, etc.).
         `);
 
         return NextResponse.json({ role: "assistant", content: dataResult.response.text() });

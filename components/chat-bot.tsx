@@ -109,7 +109,14 @@ export function ChatBot() {
                         : 'bg-white text-slate-700 border border-slate-200 rounded-bl-none'
                     )}
                   >
-                    {msg.content}
+                    {msg.role === 'assistant' ? (
+                      <div
+                        className="space-y-2 text-sm [&>ul]:list-disc [&>ul]:pl-4 [&>ol]:list-decimal [&>ol]:pl-4 [&>p]:mb-1 [&_b]:font-semibold [&_strong]:font-semibold [&_table]:w-full [&_table]:border-collapse [&_table]:border [&_table]:border-slate-200 [&_table]:mt-2 [&_th]:bg-slate-100 [&_th]:p-2 [&_th]:text-left [&_th]:font-semibold [&_th]:border [&_th]:border-slate-200 [&_td]:p-2 [&_td]:border [&_td]:border-slate-200"
+                        dangerouslySetInnerHTML={{ __html: msg.content }}
+                      />
+                    ) : (
+                      msg.content
+                    )}
                   </div>
                 </div>
               ))}
@@ -131,7 +138,7 @@ export function ChatBot() {
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
                   placeholder="พิมพ์คำถามของคุณ..."
-                  className="flex-1 px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-full text-sm focus:outline-none focus:border-[#0a6ed1] focus:ring-1 focus:ring-[#0a6ed1] transition-all"
+                  className="flex-1 px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-full text-sm text-slate-900 focus:outline-none focus:border-[#0a6ed1] focus:ring-1 focus:ring-[#0a6ed1] transition-all"
                 />
                 <button
                   type="submit"
