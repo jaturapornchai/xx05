@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Sarabun } from "next/font/google";
 import type { ReactNode } from "react";
 import { NavBar } from "@/components/nav-bar";
+import { ChatBot } from "@/components/chat-bot";
 import "./globals.css";
 
 const sarabun = Sarabun({
@@ -29,12 +30,7 @@ export default function RootLayout({
         <main className="mx-auto flex w-full max-w-[1440px] flex-1 flex-col gap-4 px-4 py-6">
           {children}
         </main>
-        <footer className="border-t border-slate-200 bg-white py-4 mt-auto">
-          <div className="mx-auto max-w-[1440px] px-4 text-center text-xs text-slate-500">
-            <p>ระบบบริหารจัดการสหกรณ์การเกษตรแห่งชาติ | National Agricultural Cooperative Management System</p>
-            <p className="mt-1">SAP Fiori Inspired Design © 2025</p>
-          </div>
-        </footer>
+        <ChatBot />
       </body>
     </html>
   );
