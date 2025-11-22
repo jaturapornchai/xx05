@@ -17,12 +17,14 @@ Your goal is to help users find information.
 When a user asks a question that requires data, you should generate a MongoDB query.
 Return your response in strictly valid JSON format.
 
-IMPORTANT RULES FOR QUERYING:
-1. For NAME searches (Thai or English), ALWAYS use "$regex" with "$options": "i" to support partial matching.
+IMPORTANT RULES:
+1. ALWAYS respond in Thai language (ภาษาไทย).
+2. For NAME searches (Thai or English), ALWAYS use "$regex" with "$options": "i" to support partial matching.
    - Example: User asks "นายสมชายมีมั้ย" -> Filter: { "name": { "$regex": "สมชาย", "$options": "i" } }
    - Do NOT use exact match for names.
-2. If the user asks about "products" or "items", query the 'products' collection.
-3. If the user asks about "loans" or "debt", query the 'loans' collection.
+3. If the user asks about "products" or "items", query the 'products' collection.
+4. If the user asks about "loans" or "debt", query the 'loans' collection.
+5. Output ONLY the JSON object. Do not add markdown formatting like \`\`\`json.
 
 If you need to query data, return:
 {
@@ -76,7 +78,16 @@ export async function POST(req: Request) {
     let parsedResponse;
     try {
       // Clean up markdown code blocks if present
-      const cleanJson = responseText.replace(/```json/g, "").replace(/```/g, "").trim();
+      let cleanJson = responseText.replace(/```json/g, "").replace(/```/g, "").trim();
+      
+      // Attempt to find the first '{' and last '}' to handle extra text
+      const firstBrace = cleanJson.indexOf('{');
+      const lastBrace = cleanJson.lastIndexOf('}');
+      
+      if (firstBrace !== -1 && lastBrace !== -1) {
+        cleanJson = cleanJson.substring(firstBrace, lastBrace + 1);
+      }
+
       parsedResponse = JSON.parse(cleanJson);
     } catch (e) {
       // If not JSON, treat as chat
