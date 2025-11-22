@@ -6,6 +6,7 @@ import { Card, CardHeader, CardTitle, CardContent, StatsCard } from "@/component
 import { Button } from "@/components/ui/button";
 import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell, Badge } from "@/components/ui/table";
 import { formatCurrency, formatNumber, formatDate } from "@/lib/utils";
+import { FinancialBarChart, LoanStatusPieChart, MemberGrowthAreaChart } from "@/components/dashboard-charts";
 
 // Mock data for dashboard
 const summaryData = {
@@ -47,103 +48,10 @@ const alerts = [
   { id: 3, type: "success", message: "รายได้เดือนนี้เพิ่มขึ้น 12% จากเดือนก่อน", link: "/reports/revenue" },
 ];
 
-// Simple bar chart component
-function SimpleBarChart({ data, title }: { data: { label: string; value: number; color: string }[]; title: string }) {
-  const maxValue = Math.max(...data.map(d => d.value));
 
-  return (
-    <div className="space-y-3">
-      {title && <h4 className="font-medium text-slate-700">{title}</h4>}
-      <div className="space-y-2">
-        {data.map((item, index) => (
-          <div key={index} className="space-y-1">
-            <div className="flex justify-between text-sm">
-              <span className="text-slate-600">{item.label}</span>
-              <span className="font-medium">{formatCurrency(item.value)}</span>
-            </div>
-            <div className="h-3 bg-slate-100 rounded-full overflow-hidden">
-              <div
-                className={`h-full rounded-full transition-all duration-500 ${item.color}`}
-                style={{ width: `${(item.value / maxValue) * 100}%` }}
-              />
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-// Donut chart component (CSS-based)
-function DonutChart({ data, total, centerLabel }: {
-  data: { label: string; value: number; color: string }[];
-  total: number;
-  centerLabel: string;
-}) {
-  let cumulativePercent = 0;
-
-  const segments = data.map(item => {
-    const percent = (item.value / total) * 100;
-    const segment = {
-      ...item,
-      percent,
-      offset: cumulativePercent,
-    };
-    cumulativePercent += percent;
-    return segment;
-  });
-
-  return (
-    <div className="flex items-center gap-6">
-      <div className="relative w-32 h-32">
-        <svg viewBox="0 0 36 36" className="w-full h-full -rotate-90">
-          {segments.map((segment, index) => (
-            <circle
-              key={index}
-              cx="18"
-              cy="18"
-              r="15.9155"
-              fill="transparent"
-              stroke={segment.color}
-              strokeWidth="3"
-              strokeDasharray={`${segment.percent} ${100 - segment.percent}`}
-              strokeDashoffset={`${-segment.offset}`}
-              className="transition-all duration-500"
-            />
-          ))}
-        </svg>
-        <div className="absolute inset-0 flex flex-col items-center justify-center">
-          <span className="text-lg font-bold text-slate-800">{formatNumber(total)}</span>
-          <span className="text-xs text-slate-500">{centerLabel}</span>
-        </div>
-      </div>
-      <div className="space-y-2">
-        {data.map((item, index) => (
-          <div key={index} className="flex items-center gap-2 text-sm">
-            <div className="w-3 h-3 rounded-full" style={{ backgroundColor: item.color }} />
-            <span className="text-slate-600">{item.label}</span>
-            <span className="font-medium">{formatNumber(item.value)}</span>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
 
 export default function DashboardPage() {
   const [selectedPeriod, setSelectedPeriod] = useState<"day" | "week" | "month" | "year">("month");
-
-  const loanStatusData = [
-    { label: "ปกติ", value: 145, color: "#22c55e" },
-    { label: "ค้างชำระ", value: 3, color: "#ef4444" },
-    { label: "ปิดบัญชี", value: 52, color: "#94a3b8" },
-  ];
-
-  const revenueData = [
-    { label: "ดอกเบี้ยเงินกู้", value: 1234560, color: "bg-blue-500" },
-    { label: "ค่าธรรมเนียม", value: 234560, color: "bg-green-500" },
-    { label: "ขายสินค้า", value: 876550, color: "bg-amber-500" },
-  ];
 
   const getTransactionIcon = (type: string) => {
     switch (type) {
@@ -388,14 +296,14 @@ export default function DashboardPage() {
       </div>
 
       {/* Charts Row */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Revenue Chart */}
-        <Card>
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {/* Financial Chart */}
+        <Card className="lg:col-span-2">
           <CardHeader>
-            <CardTitle>รายได้ตามประเภท</CardTitle>
+            <CardTitle>ภาพรวมการเงินรายเดือน</CardTitle>
           </CardHeader>
           <CardContent>
-            <SimpleBarChart data={revenueData} title="" />
+            <FinancialBarChart />
           </CardContent>
         </Card>
 
@@ -405,7 +313,17 @@ export default function DashboardPage() {
             <CardTitle>สถานะสินเชื่อ</CardTitle>
           </CardHeader>
           <CardContent>
-            <DonutChart data={loanStatusData} total={200} centerLabel="สัญญา" />
+            <LoanStatusPieChart />
+          </CardContent>
+        </Card>
+
+        {/* Member Growth */}
+        <Card className="lg:col-span-3">
+          <CardHeader>
+            <CardTitle>การเติบโตของสมาชิก (5 ปีย้อนหลัง)</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <MemberGrowthAreaChart />
           </CardContent>
         </Card>
       </div>

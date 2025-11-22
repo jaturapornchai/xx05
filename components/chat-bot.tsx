@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { MessageCircle, X, Send, Loader2, Bot, Maximize2 } from 'lucide-react';
+import { MessageCircle, X, Send, Loader2, Maximize2, Minimize2, Bot, Trash2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface Message {
@@ -37,6 +37,31 @@ export function ChatBot() {
       default:
         return 'w-96 h-[500px]';
     }
+  };
+
+  // Load history from local storage
+  useEffect(() => {
+    const savedMessages = localStorage.getItem('chat_history');
+    if (savedMessages) {
+      try {
+        setMessages(JSON.parse(savedMessages));
+      } catch (e) {
+        console.error('Failed to parse chat history', e);
+      }
+    }
+  }, []);
+
+  // Save history to local storage
+  useEffect(() => {
+    if (messages.length > 0) {
+      localStorage.setItem('chat_history', JSON.stringify(messages));
+    }
+  }, [messages]);
+
+  const clearHistory = () => {
+    const initialMessage: Message = { role: 'assistant', content: 'สวัสดีครับ มีอะไรให้ผมช่วยค้นหาในระบบสหกรณ์ไหมครับ?' };
+    setMessages([initialMessage]);
+    localStorage.removeItem('chat_history');
   };
 
   useEffect(() => {
@@ -104,11 +129,18 @@ export function ChatBot() {
               </div>
               <div className="flex items-center gap-1">
                 <button
+                  onClick={clearHistory}
+                  className="p-1 hover:bg-white/10 rounded-lg transition-colors"
+                  title="ล้างประวัติการสนทนา"
+                >
+                  <Trash2 size={18} />
+                </button>
+                <button
                   onClick={toggleSize}
                   className="p-1 hover:bg-white/10 rounded-lg transition-colors"
-                  title="ปรับขนาดหน้าต่าง"
+                  title={sizeMode === 0 ? "ขยายขนาด" : sizeMode === 1 ? "เต็มจอ" : "ย่อขนาด"}
                 >
-                  <Maximize2 size={18} />
+                  {sizeMode === 2 ? <Minimize2 size={18} /> : <Maximize2 size={18} />}
                 </button>
                 <button
                   onClick={() => setIsOpen(false)}
