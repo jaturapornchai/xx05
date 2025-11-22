@@ -16,49 +16,84 @@ const sections = [
 ];
 
 const baseClasses =
-  "flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium transition-all duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500";
-const activeClasses = "bg-gradient-to-r from-blue-600 to-blue-700 text-white shadow-sm";
-const inactiveClasses = "text-slate-600 hover:bg-slate-100 hover:text-slate-900";
+  "flex items-center gap-2 rounded px-3 py-2 text-sm font-medium transition-colors hover:bg-white/10 text-white/90 hover:text-white";
+const activeClasses = "bg-white/20 text-white shadow-none border-b-2 border-yellow-400 rounded-b-none";
+const inactiveClasses = "";
 
 export function NavBar() {
   const pathname = usePathname();
 
   return (
-    <header className="sticky top-0 z-40 border-b border-slate-200 bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/80">
-      <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-6 py-3">
-        <Link href="/" className="flex items-center gap-3">
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-blue-600 to-blue-700 shadow-lg shadow-blue-500/25">
-            <svg className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+    <header className="sticky top-0 z-50 bg-[#354a5f] text-white shadow-md">
+      <div className="mx-auto flex h-12 max-w-[1440px] items-center justify-between px-4">
+        <div className="flex items-center gap-4">
+          <button className="p-1 hover:bg-white/10 rounded">
+            <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
             </svg>
-          </div>
-          <div className="flex flex-col">
-            <span className="text-lg font-bold bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent">
-              ระบบสหกรณ์
+          </button>
+          <Link href="/" className="flex items-center gap-2">
+            <div className="flex h-8 w-8 items-center justify-center rounded bg-white/10">
+              <svg className="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+              </svg>
+            </div>
+            <span className="text-base font-semibold tracking-tight">
+              Cooperative ERP
             </span>
-            <span className="text-xs text-slate-500">
-              Agricultural Cooperative System
-            </span>
-          </div>
-        </Link>
-        <nav className="flex flex-wrap items-center gap-1">
-          {sections.map(({ href, label, icon }) => {
-            const isActive = href === "/" ? pathname === "/" : pathname.startsWith(href);
+          </Link>
+        </div>
 
-            return (
-              <Link
-                key={href}
-                href={href}
-                className={`${baseClasses} ${isActive ? activeClasses : inactiveClasses}`}
-              >
-                <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d={icon} />
-                </svg>
-                <span className="hidden lg:inline">{label}</span>
-              </Link>
-            );
-          })}
-        </nav>
+        <div className="flex-1 px-8 max-w-xl">
+          <div className="relative">
+            <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+              <svg className="h-4 w-4 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              </svg>
+            </div>
+            <input
+              type="text"
+              className="block w-full rounded bg-white/10 border-none py-1.5 pl-10 pr-3 text-sm text-white placeholder-white/60 focus:ring-2 focus:ring-white/30 sm:text-sm sm:leading-6"
+              placeholder="ค้นหา (Search)..."
+            />
+          </div>
+        </div>
+
+        <div className="flex items-center gap-3">
+          <button className="p-1.5 hover:bg-white/10 rounded-full relative">
+            <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+            </svg>
+            <span className="absolute top-1 right-1 h-2 w-2 rounded-full bg-red-500 ring-2 ring-[#354a5f]"></span>
+          </button>
+          <div className="h-8 w-8 rounded-full bg-blue-500 flex items-center justify-center text-xs font-bold border-2 border-white/20">
+            AD
+          </div>
+        </div>
+      </div>
+      
+      {/* Secondary Navigation Bar */}
+      <div className="bg-white border-b border-slate-200 shadow-sm">
+        <div className="mx-auto max-w-[1440px] px-4">
+          <nav className="flex items-center gap-1 overflow-x-auto py-1">
+            {sections.map(({ href, label }) => {
+              const isActive = href === "/" ? pathname === "/" : pathname.startsWith(href);
+              return (
+                <Link
+                  key={href}
+                  href={href}
+                  className={`whitespace-nowrap px-4 py-2 text-sm font-medium border-b-2 transition-colors ${
+                    isActive
+                      ? "border-[#0a6ed1] text-[#0a6ed1]"
+                      : "border-transparent text-slate-600 hover:text-[#0a6ed1] hover:border-slate-300"
+                  }`}
+                >
+                  {label}
+                </Link>
+              );
+            })}
+          </nav>
+        </div>
       </div>
     </header>
   );

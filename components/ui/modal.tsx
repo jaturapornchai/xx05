@@ -44,7 +44,7 @@ export function Modal({ isOpen, onClose, children, size = 'md' }: ModalProps) {
     <div className="fixed inset-0 z-50 overflow-y-auto">
       {/* Backdrop */}
       <div
-        className="fixed inset-0 bg-black/50 backdrop-blur-sm transition-opacity"
+        className="fixed inset-0 bg-black/40 transition-opacity"
         onClick={onClose}
       />
 
@@ -52,7 +52,7 @@ export function Modal({ isOpen, onClose, children, size = 'md' }: ModalProps) {
       <div className="flex min-h-full items-center justify-center p-4">
         <div
           className={cn(
-            'relative w-full bg-white rounded-2xl shadow-2xl transform transition-all',
+            'relative w-full bg-white rounded-sm shadow-xl transform transition-all border border-slate-200',
             sizes[size]
           )}
           onClick={(e) => e.stopPropagation()}
@@ -71,15 +71,15 @@ interface ModalHeaderProps {
 
 export function ModalHeader({ children, onClose }: ModalHeaderProps) {
   return (
-    <div className="flex items-center justify-between px-6 py-4 border-b border-slate-200">
-      <h2 className="text-xl font-semibold text-slate-900">{children}</h2>
+    <div className="flex items-center justify-between px-4 py-3 border-b border-slate-200 bg-slate-50 rounded-t-sm">
+      <h2 className="text-lg font-bold text-slate-800">{children}</h2>
       {onClose && (
         <button
           onClick={onClose}
-          className="p-2 hover:bg-slate-100 rounded-lg transition-colors"
+          className="p-1.5 hover:bg-slate-200 rounded-sm transition-colors"
         >
           <svg
-            className="w-5 h-5 text-slate-500"
+            className="w-4 h-4 text-slate-600"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"

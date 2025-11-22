@@ -13,8 +13,8 @@ export function Card({ children, className, hover = false }: CardProps) {
   return (
     <div
       className={cn(
-        'bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden',
-        hover && 'hover:shadow-md hover:border-slate-300 transition-all duration-200',
+        'bg-white rounded-sm border border-slate-200 shadow-sm overflow-hidden',
+        hover && 'hover:shadow-md hover:border-[#0a6ed1] transition-all duration-200',
         className
       )}
     >
@@ -33,12 +33,12 @@ export function CardHeader({ children, className, action }: CardHeaderProps) {
   return (
     <div
       className={cn(
-        'px-6 py-4 border-b border-slate-100 bg-gradient-to-r from-slate-50 to-white flex items-center justify-between',
+        'px-4 py-3 border-b border-slate-200 flex items-center justify-between bg-white',
         className
       )}
     >
-      <div>{children}</div>
-      {action && <div>{action}</div>}
+      <div className="flex-1">{children}</div>
+      {action && <div className="ml-4">{action}</div>}
     </div>
   );
 }

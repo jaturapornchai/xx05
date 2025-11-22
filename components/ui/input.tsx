@@ -38,13 +38,13 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
             ref={ref}
             id={inputId}
             className={cn(
-              'block w-full rounded-lg border border-slate-300 bg-white px-4 py-2.5 text-slate-900 placeholder:text-slate-400',
-              'focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 focus:outline-none',
+              'block w-full rounded-sm border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 placeholder:text-slate-400',
+              'focus:border-[#0a6ed1] focus:ring-1 focus:ring-[#0a6ed1] focus:outline-none',
               'transition-all duration-200',
               'disabled:bg-slate-50 disabled:text-slate-500 disabled:cursor-not-allowed',
-              error && 'border-red-500 focus:border-red-500 focus:ring-red-500/20',
-              !!leftIcon && 'pl-10',
-              !!rightIcon && 'pr-10',
+              error && 'border-red-500 focus:border-red-500 focus:ring-red-500',
+              !!leftIcon && 'pl-9',
+              !!rightIcon && 'pr-9',
               className
             )}
             {...props}
@@ -90,11 +90,11 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
           ref={ref}
           id={inputId}
           className={cn(
-            'block w-full rounded-lg border border-slate-300 bg-white px-4 py-2.5 text-slate-900 placeholder:text-slate-400',
-            'focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 focus:outline-none',
+            'block w-full rounded-sm border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 placeholder:text-slate-400',
+            'focus:border-[#0a6ed1] focus:ring-1 focus:ring-[#0a6ed1] focus:outline-none',
             'transition-all duration-200 resize-none',
             'disabled:bg-slate-50 disabled:text-slate-500 disabled:cursor-not-allowed',
-            error && 'border-red-500 focus:border-red-500 focus:ring-red-500/20',
+            error && 'border-red-500 focus:border-red-500 focus:ring-red-500',
             className
           )}
           rows={4}

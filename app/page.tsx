@@ -54,161 +54,59 @@ const quickLinks = [
 
 export default function Home() {
   return (
-    <div className="space-y-8">
-      {/* Hero Section */}
-      <section className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-blue-600 via-blue-700 to-indigo-800 p-8 lg:p-12 text-white">
-        <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-10" />
-        <div className="relative">
-          <div className="flex items-center gap-2 mb-4">
-            <span className="px-3 py-1 bg-white/20 backdrop-blur-sm rounded-full text-sm font-medium">
-              ระบบสหกรณ์ครบวงจร
-            </span>
-          </div>
-          <h1 className="text-3xl lg:text-4xl font-bold mb-4">
-            ระบบบริหารจัดการสหกรณ์การเกษตรแห่งชาติ
-          </h1>
-          <p className="text-lg text-blue-100 max-w-2xl mb-8">
-            ระบบสารสนเทศเพื่อการบริหารจัดการสหกรณ์การเกษตรที่ครอบคลุมทุกมิติ
-            ตั้งแต่การจัดการสมาชิก ทุนเรือนหุ้น เงินฝาก สินเชื่อ ไปจนถึงธุรกิจจัดหาสินค้าและรวบรวมผลผลิต
-          </p>
-          <div className="flex flex-wrap gap-3">
-            <Link
-              href="/cooperatives"
-              className="inline-flex items-center gap-2 px-5 py-2.5 bg-white text-blue-700 font-semibold rounded-xl hover:bg-blue-50 transition-colors shadow-lg"
-            >
-              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
-              </svg>
-              จัดการสหกรณ์
-            </Link>
-            <Link
-              href="/dashboard"
-              className="inline-flex items-center gap-2 px-5 py-2.5 bg-white/10 backdrop-blur-sm text-white font-semibold rounded-xl hover:bg-white/20 transition-colors border border-white/20"
-            >
-              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6z" />
-              </svg>
-              ดูแดชบอร์ด
-            </Link>
-          </div>
-        </div>
-      </section>
+    <div className="space-y-6">
+      <div className="flex items-center justify-between">
+        <h2 className="text-xl font-semibold text-slate-700">My Home</h2>
+        <button className="text-sm text-[#0a6ed1] hover:underline">Edit Home Page</button>
+      </div>
 
-      {/* Quick Links */}
-      <section className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
+        {features.map((feature) => (
+          <Link
+            key={feature.href}
+            href={feature.href}
+            className="group relative flex flex-col justify-between h-40 p-4 bg-white border border-slate-200 rounded shadow-sm hover:shadow-md hover:border-[#0a6ed1] transition-all"
+          >
+            <div className="flex-1 flex flex-col items-start">
+              <h3 className="font-semibold text-slate-700 group-hover:text-[#0a6ed1] line-clamp-2">
+                {feature.title}
+              </h3>
+              <p className="text-xs text-slate-500 mt-1 line-clamp-2">
+                {feature.description}
+              </p>
+            </div>
+            <div className="self-end mt-2">
+              <svg className="w-8 h-8 text-slate-400 group-hover:text-[#0a6ed1]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d={feature.icon} />
+              </svg>
+            </div>
+          </Link>
+        ))}
+        
+        {/* Quick Links as Tiles */}
         {quickLinks.map((link) => (
           <Link
             key={link.href}
             href={link.href}
-            className="flex items-center gap-3 p-4 bg-white rounded-xl border border-slate-200 hover:border-blue-300 hover:shadow-md transition-all group"
+            className="group relative flex flex-col justify-between h-40 p-4 bg-white border border-slate-200 rounded shadow-sm hover:shadow-md hover:border-[#0a6ed1] transition-all"
           >
-            <div className="p-2 bg-blue-50 rounded-lg text-blue-600 group-hover:bg-blue-100 transition-colors">
-              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+            <div className="flex-1">
+              <h3 className="font-semibold text-slate-700 group-hover:text-[#0a6ed1]">
+                {link.label}
+              </h3>
+              <span className="inline-block mt-2 px-2 py-0.5 text-[10px] font-medium bg-blue-50 text-blue-600 rounded">
+                Quick Action
+              </span>
+            </div>
+            <div className="self-end mt-2">
+              <svg className="w-8 h-8 text-slate-400 group-hover:text-[#0a6ed1]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
                 <path strokeLinecap="round" strokeLinejoin="round" d={link.icon} />
               </svg>
             </div>
-            <span className="font-medium text-slate-700 group-hover:text-blue-700 transition-colors">
-              {link.label}
-            </span>
           </Link>
         ))}
-      </section>
-
-      {/* Features Grid */}
-      <section>
-        <h2 className="text-xl font-bold text-slate-900 mb-6">โมดูลระบบ</h2>
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {features.map((feature) => (
-            <Link
-              key={feature.href}
-              href={feature.href}
-              className="group relative overflow-hidden bg-white rounded-2xl border border-slate-200 p-6 hover:border-slate-300 hover:shadow-lg transition-all"
-            >
-              <div className={`inline-flex p-3 rounded-xl bg-gradient-to-br ${feature.color} text-white shadow-lg mb-4`}>
-                <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d={feature.icon} />
-                </svg>
-              </div>
-              <h3 className="text-lg font-semibold text-slate-900 mb-2 group-hover:text-blue-700 transition-colors">
-                {feature.title}
-              </h3>
-              <p className="text-sm text-slate-600 leading-relaxed">
-                {feature.description}
-              </p>
-              <div className="absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity">
-                <svg className="w-5 h-5 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                </svg>
-              </div>
-            </Link>
-          ))}
-        </div>
-      </section>
-
-      {/* Info Cards */}
-      <section className="grid lg:grid-cols-2 gap-6">
-        <div className="bg-gradient-to-br from-emerald-50 to-teal-50 rounded-2xl border border-emerald-200 p-6">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="p-2 bg-emerald-100 rounded-lg">
-              <svg className="w-6 h-6 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-              </svg>
-            </div>
-            <h3 className="text-lg font-semibold text-slate-900">ความปลอดภัยของข้อมูล</h3>
-          </div>
-          <ul className="space-y-2 text-sm text-slate-600">
-            <li className="flex items-center gap-2">
-              <svg className="w-4 h-4 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-              </svg>
-              รองรับ พ.ร.บ. คุ้มครองข้อมูลส่วนบุคคล (PDPA)
-            </li>
-            <li className="flex items-center gap-2">
-              <svg className="w-4 h-4 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-              </svg>
-              เข้ารหัสข้อมูลทั้งในฐานข้อมูลและการส่งผ่านเครือข่าย
-            </li>
-            <li className="flex items-center gap-2">
-              <svg className="w-4 h-4 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-              </svg>
-              ระบบสำรองข้อมูลอัตโนมัติทุกวัน
-            </li>
-          </ul>
-        </div>
-
-        <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl border border-blue-200 p-6">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="p-2 bg-blue-100 rounded-lg">
-              <svg className="w-6 h-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
-              </svg>
-            </div>
-            <h3 className="text-lg font-semibold text-slate-900">รองรับหลายสหกรณ์</h3>
-          </div>
-          <ul className="space-y-2 text-sm text-slate-600">
-            <li className="flex items-center gap-2">
-              <svg className="w-4 h-4 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-              </svg>
-              แยกข้อมูลแต่ละสหกรณ์อย่างเด็ดขาด
-            </li>
-            <li className="flex items-center gap-2">
-              <svg className="w-4 h-4 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-              </svg>
-              ตั้งค่าข้อบังคับเฉพาะแต่ละสหกรณ์ได้
-            </li>
-            <li className="flex items-center gap-2">
-              <svg className="w-4 h-4 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-              </svg>
-              รายงานรวมระดับเครือข่ายหรือจังหวัด
-            </li>
-          </ul>
-        </div>
-      </section>
+      </div>
     </div>
   );
 }
+

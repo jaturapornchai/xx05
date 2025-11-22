@@ -23,16 +23,16 @@ export default function RootLayout({
   return (
     <html lang="th">
       <body
-        className={`${sarabun.variable} font-sans bg-gradient-to-br from-slate-50 to-blue-50/30 text-slate-900 antialiased flex min-h-screen flex-col`}
+        className={`${sarabun.variable} font-sans bg-background text-foreground antialiased flex min-h-screen flex-col`}
       >
         <NavBar />
-        <main className="mx-auto flex w-full max-w-7xl flex-1 flex-col gap-6 px-6 py-8">
+        <main className="mx-auto flex w-full max-w-[1440px] flex-1 flex-col gap-4 px-4 py-6">
           {children}
         </main>
-        <footer className="border-t border-slate-200 bg-white py-6">
-          <div className="mx-auto max-w-7xl px-6 text-center text-sm text-slate-500">
+        <footer className="border-t border-slate-200 bg-white py-4 mt-auto">
+          <div className="mx-auto max-w-[1440px] px-4 text-center text-xs text-slate-500">
             <p>ระบบบริหารจัดการสหกรณ์การเกษตรแห่งชาติ | National Agricultural Cooperative Management System</p>
-            <p className="mt-1">พัฒนาตามมาตรฐานกรมตรวจบัญชีสหกรณ์และกรมส่งเสริมสหกรณ์</p>
+            <p className="mt-1">SAP Fiori Inspired Design © 2025</p>
           </div>
         </footer>
       </body>
